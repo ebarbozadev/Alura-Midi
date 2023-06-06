@@ -4,11 +4,17 @@ const listaDeSom = document.querySelectorAll('audio');
 const listaDeTeclas = document.querySelectorAll('.tecla');
 
 // Criando função para tocar som
-function tocaSom(idElemento) {
-    document.querySelector(idElemento).play();
+function tocaSom(seletor) {
+    const elemento = document.querySelector(seletor);
+
+    if (elemento === null || elemento.localName !== 'audio'){
+        console.log('Elemento não encontrado');
+    } else {
+        elemento.play();
+    }
 }
 
-for (let i = 0; i < listaDeTeclas.length; i++){
+for (let i = 0; i < listaDeTeclas.length; i++) {
     // Armazenando as teclas
     const tecla = listaDeTeclas[i];
     // Armazenar o instrumento
@@ -21,11 +27,15 @@ for (let i = 0; i < listaDeTeclas.length; i++){
     };
 
     // onKeyDown = é uma função que executa quando a tecla estiver abaixada
-    tecla.onkeydown = function () {
-        tecla.classList.add('ativa');
+    tecla.onkeydown = function (evento) {
+        if (evento.code == 'Space' || evento.code == 'Enter') {
+            tecla.classList.add('ativa');
+        }
     }
     // onKeyUp = é uma função que executa quando a tecla for levantada
-    tecla.onkeyup = function () {
-        tecla.classList.remove('ativa');
+    tecla.onkeyup = function (evento) {
+        if (evento.code == 'Space' || evento.code == 'Enter') {
+            tecla.classList.remove('ativa');
+        }
     }
 }
